@@ -12,7 +12,7 @@ InChI.js is made possible by [Emscripten](http://kripken.github.io/emscripten-si
 
 ## Demo
 
-[http://metamolecular.com/inchijs](http://metamolecular.com/inchi-js)
+[http://metamolecular.com/inchi-js](http://metamolecular.com/inchi-js)
 
 ## Compilation
 
