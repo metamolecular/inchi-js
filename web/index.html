@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>InChI Test</title>
+    <link rel="stylesheet" href="http://chemwriter.com/sdk/chemwriter.css">
+    <script src="http://chemwriter.com/sdk/chemwriter.js" data-chemwriter-license="license.txt"></script>
+  </head>
+  <body>
+    <div id="editor"
+         data-chemwriter-width="630"
+         data-chemwriter-height="350"
+         data-chemwriter-ui="editor">
+    </div>
+    <script>
+      var InChI = {
+        onRuntimeInitialized: function () {
+          InChI.fromMolfile = InChI.cwrap('get_inchi', 'string', ['string']);
+        },
+        memoryInitializerPrefixURL: '../build/'
+      };
+      
+      var pull = function () {
+        var molfile = chemwriter.components.editor.getMolfile();
+        
+        console.log(InChI.fromMolfile(molfile));
+      };
+      
+      var benchmark = function () {
+        var start = Date.now();
+        
+        for (var i = 0; i < 200; i++) {
+          var molfile = chemwriter.components.editor.getMolfile();
+          
+          console.log(InChI.fromMolfile(molfile));
+        }
+        
+        console.log(new Date - start);
+      };
+      
+      chemwriter.System.ready(function () {
+        var editor = chemwriter.components.editor;
+        
+        editor.addEventListener('document-edited', function () {
+          pull();
+        });
+      });
+    </script>
+    <script async src="../build/inchi.js"></script>
+  </body>
+</html>
