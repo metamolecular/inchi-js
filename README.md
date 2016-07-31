@@ -18,7 +18,7 @@ InChI.js is made possible by [Emscripten](http://kripken.github.io/emscripten-si
 
 InChI.js can be compiled from source. To do so, first install the [Emscripten toolchain](https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html).
 
-If using the [Emscripten portable installation](), activate it with:
+If using the Emscripten portable installation, activate it with:
 
 ```
 $ path-to-portable-installation/emsdk activate latest
