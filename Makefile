@@ -4,10 +4,10 @@
 
 CC =           emcc
 EXPORTED =     -s EXPORTED_FUNCTIONS="['_get_inchi', 'cwrap', 'onRuntimeInitialized']"
-MAIN =         lib/inchi/INCHI_API/inchi_main/
-DLL =          lib/inchi/INCHI_API/inchi_dll/
-COMMON =       lib/inchi/INCHI/common/
-INCHI_MAIN =   lib/inchi/INCHI_API/inchi_main/
+MAIN =         submod/inchi/INCHI_API/inchi_main/
+DLL =          submod/inchi/INCHI_API/inchi_dll/
+COMMON =       submod/inchi/INCHI/common/
+INCHI_MAIN =   submod/inchi/INCHI_API/inchi_main/
 BUILD =        build
 INCHI =        src/inchi.c
 INCHIJS =      $(BUILD)/inchi.js
