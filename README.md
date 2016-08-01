@@ -41,12 +41,13 @@ $ make
 
 ## Deployment
 
-The <code>build</code> directory contains two files, both of which are needed. Place these files into a publicly-viewable directory.
+The <code>build</code> directory contains three files:
 
 - <code>inchi.js</code>: The complete JavaScript code required to generate InChIs.
 - <code>inchi.js.mem</code>: The Emscripten [<code>memory file</code>](https://kripken.github.io/emscripten-site/docs/optimizing/Optimizing-Code.html#memory-initialization) that will be loaded by <code>inchi.js</code>
+- `inchi-node.js`: All-in-one file for Node.js deployment.
 
-Create an HTML document containing the following tag:
+Browser deployment uses the first two file. Create an HTML document containing the following tag:
 
 ```
 <script async src="../build/inchi.js"></script>
@@ -71,6 +72,27 @@ var InChI = {
 ```
 
 <code>InChI.getMolfile</code> returns an InChI string on success. On warning or failure, a multi-line string is returned in which warnings and errors appear after the first line.
+
+Node.js deployment uses the third file, `inchi-node.js`. InChIs can be generated from this file using a script such as the following:
+
+```javascript
+let lib = require('inchi-node');
+
+const molfileToInchi = lib.wrap('get_inchi', 'string', [ 'string' ]);
+
+let molfile = getMolfile(); // load a molfile string
+let inchi = molfileToInchi(molfile);
+```
+
+Alternatively, the convenience library contained in `lib` can be used:
+
+```javascript
+let InChI = require('./lib/inchi');
+
+let molfile = getMolfile(); // load a molfile string
+let inchi = InChI.molfileToInchi(molfile);
+let key = InChI.inchiToKey(inchi);
+```
 
 ## Running Compiled inchi.js
 
