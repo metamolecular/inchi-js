@@ -3,7 +3,7 @@
 # IUPAC/InChI-Trust InChI Licence No. 1.0.
 
 CC =           emcc
-EXPORTED =     -s EXPORTED_FUNCTIONS="['_get_inchi', 'cwrap', 'onRuntimeInitialized']"
+EXPORTED =     -s EXPORTED_FUNCTIONS="['_get_inchi', '_inchi_to_key', 'cwrap', 'onRuntimeInitialized']"
 MAIN =         submod/inchi/INCHI_API/inchi_main/
 DLL =          submod/inchi/INCHI_API/inchi_dll/
 COMMON =       submod/inchi/INCHI/common/
@@ -41,13 +41,20 @@ DLL_SOURCES  = $(DLL)inchi_dll.c \
                $(DLL)ichiisot.c \
                $(DLL)ichiparm.c \
                $(DLL)ichilnct.c \
+							 $(DLL)ikey_base26.c \
+							 $(DLL)ikey_dll.c \
+							 $(DLL)sha2.c \
                $(DLL)util.c
 
-production: rawjs
+production: rawjs node
 	@echo "(function(){" > $(INCHIJS).tmp
 	@cat $(INCHIJS) >> $(INCHIJS).tmp
 	@echo "})()" >> $(INCHIJS).tmp
 	@mv $(INCHIJS).tmp $(INCHIJS)
+
+node:
+	mkdir -p $(BUILD)
+	$(CC) --memory-init-file 0 -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) -o $(BUILD)/inchi-node.js -s -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
 
 rawjs:
 	mkdir -p $(BUILD)

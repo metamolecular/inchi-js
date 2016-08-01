@@ -8,6 +8,7 @@
 #include "e_ichisize.h"
 #include "e_mode.h"
 #include "e_inpdef.h"
+#include "e_ctl_data.h"
 
 char *get_inchi(char *molfile)
 {
@@ -46,5 +47,14 @@ char *get_inchi(char *molfile)
   
   FreeINCHI(&output);
 
+  return result;
+}
+
+char *inchi_to_key(char *inchi)
+{
+  char *result = malloc(28);
+  
+  GetStdINCHIKeyFromStdINCHI(inchi, result);
+  
   return result;
 }

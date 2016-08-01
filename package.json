@@ -1,0 +1,13 @@
+{
+  "name": "inchi-js",
+  "main": "lib/inchi.js",
+  "devDependencies": {
+    "chai": "3.2.0",
+    "growl": "1.8.1",
+    "mocha": "2.2.5"
+  },
+  "scripts": {
+    "test": "mocha --recursive",
+    "autotest": "mocha -G --recursive --watch"
+  }
+}
