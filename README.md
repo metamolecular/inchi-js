@@ -27,7 +27,7 @@ $ path-to-portable-installation/emsdk activate latest
 On OSX an additional step is needed:
 
 ```
-$ path-to-portable-installation/emsdk_env.sh
+$ source path-to-portable-installation/emsdk_env.sh
 ```
 
 After Emscripten has been installed and initialized, clone this repository, initialize its InChI submodule, and run <code>make</code>:

@@ -3,7 +3,7 @@
 # IUPAC/InChI-Trust InChI Licence No. 1.0.
 
 CC =           emcc
-EXPORTED =     -s EXPORTED_FUNCTIONS="['_get_inchi', '_inchi_to_key', 'cwrap', 'onRuntimeInitialized']"
+EXPORTED =     -s EXPORTED_FUNCTIONS="['_molfile_to_inchi', '_inchi_to_key']"
 MAIN =         submod/inchi/INCHI_API/inchi_main/
 DLL =          submod/inchi/INCHI_API/inchi_dll/
 COMMON =       submod/inchi/INCHI/common/
@@ -54,7 +54,7 @@ production: rawjs node
 
 node:
 	mkdir -p $(BUILD)
-	$(CC) --memory-init-file 0 -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) -o $(BUILD)/inchi-node.js -s -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
+	$(CC) --memory-init-file 0 -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) -o $(BUILD)/inchi-node.js -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
 
 rawjs:
 	mkdir -p $(BUILD)
