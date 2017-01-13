@@ -111,4 +111,4 @@ InChI.js was made possible through the previous work of Noel O'Boyle and Michał
 
 Copyright (C) 2015 Metamolecular, LLC. Compiled code uses content copyright (C) 2011 IUPAC and InChI Trust Limited.
 
-This library and build system are licensed under the terms of the [IUPAC/InChI-Trust InChI Licence No. 1.0](http://www.inchi-trust.org/download/104/LICENCE.pdf) (see: LICENSE.txt).
+This library and build system are licensed under the terms of the [IUPAC/InChI-Trust InChI License No. 1.0](http://www.inchi-trust.org/download/104/LICENCE.pdf) (see: LICENSE.txt).
