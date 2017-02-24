@@ -4,6 +4,7 @@
 
 CC =           emcc
 EXPORTED =     -s EXPORTED_FUNCTIONS="['_molfile_to_inchi', '_inchi_to_key']"
+MEMORY =       -s ALLOW_MEMORY_GROWTH=1
 MAIN =         submod/inchi/INCHI_API/inchi_main/
 DLL =          submod/inchi/INCHI_API/inchi_dll/
 COMMON =       submod/inchi/INCHI/common/
@@ -54,12 +55,12 @@ production: rawjs node
 
 node:
 	mkdir -p $(BUILD)
-	$(CC) --memory-init-file 0 -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) -o $(BUILD)/inchi-node.js -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
+	$(CC) --memory-init-file 0 -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) $(MEMORY) -o $(BUILD)/inchi-node.js -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
 
 rawjs:
 	mkdir -p $(BUILD)
-	$(CC) -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) -o $(BUILD)/inchi.js -s -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
+	$(CC) -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) $(MEMORY) -o $(BUILD)/inchi.js -s -Oz -s EXPORT_NAME="'InChI'" --closure 1 -s NO_FILESYSTEM=1
 
 debug:
 	mkdir -p $(BUILD)
-	$(CC) -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) -o $(BUILD)/inchi.js -s ASSERTIONS=1
+	$(CC) -I $(COMMON) -I $(INCHI_MAIN) $(INCHI) $(MAIN_SOURCES) $(DLL_SOURCES) $(EXPORTED) $(MEMORY) -o $(BUILD)/inchi.js -s ASSERTIONS=1

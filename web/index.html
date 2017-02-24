@@ -15,7 +15,27 @@
     <script>
       var InChI = {
         onRuntimeInitialized: function () {
-          InChI.fromMolfile = InChI.cwrap('get_inchi', 'string', ['string']);
+          var cwrap = InChI.cwrap('molfile_to_inchi', 'number', ['number', 'number']);
+          
+          InChI.fromMolfile = function (molfile) {
+            var input = InChI._malloc(molfile.length + 1);
+            // TODO: catch if inchi length exceeds buffer length
+            var output = InChI._malloc(1024);
+            
+            InChI.writeStringToMemory(molfile.replace(/[^\x00-\x7F]/g, ''), input);
+            
+            let status = cwrap(input, output);
+            let result = InChI.Pointer_stringify(output);
+            
+            InChI._free(input);
+            InChI._free(output);
+            
+            if (status < 0) {
+              throw new Error(result);
+            }
+            
+            return result;
+          };
         },
         memoryInitializerPrefixURL: '../build/'
       };
@@ -28,14 +48,15 @@
       
       var benchmark = function () {
         var start = Date.now();
+        var iterations = 200;
         
-        for (var i = 0; i < 200; i++) {
+        for (var i = 0; i < iterations; i++) {
           var molfile = chemwriter.components.editor.getMolfile();
           
           console.log(InChI.fromMolfile(molfile));
         }
         
-        console.log(new Date - start);
+        console.log((new Date() - start) / iterations);
       };
       
       chemwriter.System.ready(function () {
